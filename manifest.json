@@ -1,0 +1,32 @@
+{
+    "name": "Cursor Path",
+    "description": "Track the distance traveled by your cursor",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background/background.js"
+    },
+    "permissions": [
+        "storage",
+        "activeTab"
+    ],
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["content/cursor-tracker.js"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "assets/icon16.png",
+            "48": "assets/icon48.png",
+            "128": "assets/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    }
+}

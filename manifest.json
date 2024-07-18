@@ -1,6 +1,6 @@
 {
     "name": "Cursor Path",
-    "description": "Track the distance traveled by your cursor",
+    "description": "Track your cursor movement across tabs and browsing sessions",
     "version": "1.0",
     "manifest_version": 3,
     "background": {

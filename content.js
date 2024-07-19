@@ -14,3 +14,10 @@ document.addEventListener('mousemove', (e) => {
   lastX = e.clientX;
   lastY = e.clientY;
 });
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    lastX = undefined;
+    lastY = undefined;
+  }
+});

@@ -1,15 +1,24 @@
-let totalDistance = 0;
-
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({ totalDistance: 0 });
+  chrome.storage.local.get('totalDistance', (result) => {
+    if (result.totalDistance === undefined) {
+      chrome.storage.local.set({ totalDistance: 0 });
+    }
+  });
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'updateDistance') {
-    totalDistance += request.distance;
-    chrome.storage.local.set({ totalDistance: totalDistance });
+    chrome.storage.local.get('totalDistance', (result) => {
+      const newTotalDistance = (result.totalDistance || 0) + request.distance;
+      chrome.storage.local.set({ totalDistance: newTotalDistance }, () => {
+        sendResponse({ success: true });
+      });
+    });
+    return true;
   } else if (request.type === 'getTotalDistance') {
-    sendResponse({ totalDistance: totalDistance });
+    chrome.storage.local.get('totalDistance', (result) => {
+      sendResponse({ totalDistance: result.totalDistance || 0 });
+    });
+    return true;
   }
-  return true;
 });

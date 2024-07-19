@@ -1,5 +1,7 @@
 body {
     width: 300px;
-    height: 200px;
+    height: 300px;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }

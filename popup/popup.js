@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const totalDistanceElement = document.getElementById('totalDistance');
   const realWorldDistanceElement = document.getElementById('realWorldDistance');
-  const resetButton = document.getElementById('resetButton');
 
   function updateDistance() {
     chrome.runtime.sendMessage({ type: 'getTotalDistance' }, (response) => {
@@ -17,12 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  resetButton.addEventListener('click', () => {
-    chrome.storage.local.set({ totalDistance: 0 }, () => {
-      updateDistance();
-    });
-  });
-
   updateDistance();
-  setInterval(updateDistance, 1000); // Update every second
+  setInterval(updateDistance, 1000);
 });

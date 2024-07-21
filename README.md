@@ -1,5 +1,6 @@
 <p align="center">
-  <img width="248" alt="Screenshot 2024-07-18 at 04 37 13" src="https://github.com/user-attachments/assets/8a5909c9-fe1f-40cb-9187-2475d5928432">
+<img width="300" alt="icon16" src="https://github.com/user-attachments/assets/7fbce83e-8fbd-468d-8295-ae6ac2084517">
+
 </p>
 
 <h1 align="center">Cursor Path</h1>

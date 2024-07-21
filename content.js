@@ -23,6 +23,10 @@ document.addEventListener('visibilitychange', () => {
 });
 
 if (window.location.hostname === 'cursorpath.vercel.app' && window.location.pathname === '/stats') {
+  // Trigger a custom event to indicate the extension is installed
+  const event = new CustomEvent('extension-detected');
+  window.dispatchEvent(event);
+
   // Inject CSS styles
   const style = document.createElement('style');
   style.textContent = `
@@ -67,14 +71,12 @@ if (window.location.hostname === 'cursorpath.vercel.app' && window.location.path
   document.head.appendChild(style);
 
   // Create a div element to display the stats
-  const statsDiv = document.createElement('div');
-  statsDiv.id = 'extension-stats';
+  const statsDiv = document.getElementById('extension-stats');
   statsDiv.innerHTML = `
     <h2>Cursor Path Statistics</h2>
     <p>Total Distance: <span id="totalDistance"></span> pixels</p>
     <p>Approximate Real-World Distance: <span id="realWorldDistance"></span></p>
   `;
-  document.body.appendChild(statsDiv);
 
   function updateStats() {
     // Get the stored data from Chrome local storage

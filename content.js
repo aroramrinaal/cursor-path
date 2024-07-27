@@ -23,19 +23,19 @@ document.addEventListener('visibilitychange', () => {
 });
 
 if (window.location.hostname === 'cursorpath.vercel.app' && window.location.pathname === '/stats') {
-  // Trigger a custom event to indicate the extension is installed
+
   const event = new CustomEvent('extension-detected');
   window.dispatchEvent(event);
 
-  // Inject CSS styles
+  // Injecting CSS styles
   const style = document.createElement('style');
   style.textContent = `
     @import url('https://fonts.googleapis.com/css2?family=Andika&display=swap');
     
     body {
-        background-color: hsl(210, 100%, 6%); /* background color */
-        color: hsl(180, 100%, 90%); /* foreground color */
-        font-family: 'Andika', sans-serif; /* font family */
+        background-color: hsl(210, 100%, 6%);
+        color: hsl(180, 100%, 90%);
+        font-family: 'Andika', sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -45,32 +45,32 @@ if (window.location.hostname === 'cursorpath.vercel.app' && window.location.path
     }
     
     #extension-stats {
-        background-color: hsl(210, 100%, 12%); /* card background color */
-        color: hsl(180, 100%, 90%); /* card foreground color */
-        padding: 60px; /* Increased padding */
+        background-color: hsl(210, 100%, 12%);
+        color: hsl(180, 100%, 90%);
+        padding: 60px;
         border-radius: 20px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         text-align: center;
-        font-size: 36px; /* Increased font size for stats */
-        color: hsl(198, 70%, 50%); /* accent color */
-        max-width: 800px; /* Increased max-width */
+        font-size: 36px;
+        color: hsl(198, 70%, 50%);
+        max-width: 800px;
         width: 100%;
     }
     
     #extension-stats h2 {
         margin: 20px 0;
-        font-size: 36px; /* Increased font size */
+        font-size: 36px;
         color: hsl(180, 100%, 90%);
     }
     
     #extension-stats p {
-        margin: 15px 0; /* Increased margin */
-        font-size: 28px; /* Increased font size */
+        margin: 15px 0;
+        font-size: 28px;
     }
   `;
   document.head.appendChild(style);
 
-  // Create a div element to display the stats
+
   const statsDiv = document.getElementById('extension-stats');
   statsDiv.innerHTML = `
     <h2>Cursor Path Statistics</h2>

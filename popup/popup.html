@@ -2,14 +2,16 @@
 <html>
 <head>
   <title>Cursor Path</title>
-  <link rel="stylesheet" type="text/css" href="popup.css">
+  <script src="/vendor/chart.min.js"></script>
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Cursor Path</h1>
-    <p>Total distance: <span id="totalDistance"></span> pixels</p>
-    <p>Approximate real-world distance: <span id="realWorldDistance"></span> cm</p>
-  </div>
+  <h2>Cursor Path Stats</h2>
+  <p>Today (<span id="todayDate"></span>): <span id="todayDistance"></span> pixels</p>
+  <p>Lifetime distance: <span id="lifetimeDistance"></span> pixels</p>
+  <p>5-day average: <span id="fiveDayAverage"></span> pixels</p>
+  <p>Approximate lifetime real-world distance: <span id="realWorldDistance"></span> cm</p>
+  <canvas id="distanceChart"></canvas>
   <script src="popup.js"></script>
 </body>
 </html>

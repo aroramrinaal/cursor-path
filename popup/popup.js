@@ -37,21 +37,55 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: dates.map(formatDate),
           datasets: [{
             label: 'Daily Distance (pixels)',
             data: distances,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+            pointBorderColor: 'rgba(75, 192, 192, 1)'
           }]
         },
         options: {
           scales: {
             y: {
-              beginAtZero: true
+              beginAtZero: true,
+              ticks: {
+                color: 'hsl(180, 100%, 90%)', // Set ticks color to match theme
+              },
+              title: {
+                display: true,
+                text: 'Distance (px)',
+                color: 'hsl(180, 100%, 90%)' // Set axis title color to match theme
+              }
+            },
+            x: {
+              ticks: {
+                color: 'hsl(180, 100%, 90%)', // Set ticks color to match theme
+              },
+              title: {
+                display: true,
+                text: 'Date',
+                color: 'hsl(180, 100%, 90%)' // Set axis title color to match theme
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: 'hsl(180, 100%, 90%)' // Set legend text color to match theme
+              }
+            },
+            tooltip: {
+              titleColor: 'hsl(180, 100%, 90%)',
+              bodyColor: 'hsl(180, 100%, 90%)', // Set tooltip body color
+              backgroundColor: 'rgba(0, 0, 0, 0.7)', // Dark background for contrast
+              borderColor: 'hsl(180, 100%, 90%)', // Tooltip border color
+              borderWidth: 1
             }
           }
         }

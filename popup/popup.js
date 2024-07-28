@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
               ticks: {
                 color: 'hsl(180, 100%, 90%)', // Set ticks color to match theme
               },
+              grid: {
+                color: 'hsl(180, 100%, 90%)' // Set grid line color to match theme
+              },
               title: {
                 display: true,
                 text: 'Distance (px)',
@@ -66,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
             x: {
               ticks: {
                 color: 'hsl(180, 100%, 90%)', // Set ticks color to match theme
+              },
+              grid: {
+                color: 'hsl(180, 100%, 90%)' // Set grid line color to match theme
               },
               title: {
                 display: true,

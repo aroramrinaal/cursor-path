@@ -1,17 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cursor Path</title>
   <script src="/vendor/chart.min.js"></script>
   <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h2>Cursor Path Stats</h2>
-  <p>Today (<span id="todayDate"></span>): <span id="todayDistance"></span> pixels</p>
-  <p>Lifetime distance: <span id="lifetimeDistance"></span> pixels</p>
-  <p>5-day average: <span id="fiveDayAverage"></span> pixels</p>
-  <p>Approximate lifetime real-world distance: <span id="realWorldDistance"></span> cm</p>
-  <canvas id="distanceChart"></canvas>
+  <div class="container">
+    <h1 class="title">Cursor Path Stats</h1>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h2 class="stat-title">Today's Distance</h2>
+        <p class="stat-value"><span id="todayDistance"></span> px</p>
+        <p class="stat-date" id="todayDate"></p>
+      </div>
+      <div class="stat-card">
+        <h2 class="stat-title">Lifetime Distance</h2>
+        <p class="stat-value"><span id="lifetimeDistance"></span> px</p>
+      </div>
+      <div class="stat-card">
+        <h2 class="stat-title">5-day Average</h2>
+        <p class="stat-value"><span id="fiveDayAverage"></span> px</p>
+      </div>
+      <div class="stat-card">
+        <h2 class="stat-title">Real-world Distance</h2>
+        <p class="stat-value"><span id="realWorldDistance"></span> cm</p>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="distanceChart"></canvas>
+    </div>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>

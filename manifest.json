@@ -5,12 +5,7 @@
   "version": "1.0",
   "permissions": [
     "storage",
-    "tabs",
-    "activeTab",
-    "scripting",
-    "history",
-    "idle",
-    "notifications"
+    "scripting"
   ],
   "background": {
     "service_worker": "background.js"

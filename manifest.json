@@ -4,8 +4,7 @@
   "description": "Track your cursor movement across tabs and browsing sessions.",
   "version": "1.0",
   "permissions": [
-    "storage",
-    "scripting"
+    "storage"
   ],
   "background": {
     "service_worker": "background.js"

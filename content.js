@@ -23,7 +23,6 @@ document.addEventListener('visibilitychange', () => {
 });
 
 if (window.location.hostname === 'cursorpath.vercel.app' && window.location.pathname === '/stats') {
-
   const event = new CustomEvent('extension-detected');
   window.dispatchEvent(event);
 
@@ -70,7 +69,6 @@ if (window.location.hostname === 'cursorpath.vercel.app' && window.location.path
   `;
   document.head.appendChild(style);
 
-
   const statsDiv = document.getElementById('extension-stats');
   statsDiv.innerHTML = `
     <h2>Cursor Path Statistics</h2>
@@ -79,36 +77,31 @@ if (window.location.hostname === 'cursorpath.vercel.app' && window.location.path
   `;
 
   function updateStats() {
-    // Get the stored data from Chrome local storage
-    chrome.storage.local.get(['totalDistance'], (result) => {
-      if (result.totalDistance !== undefined) {
-        const pixelDistance = result.totalDistance;
-        const cmDistance = (pixelDistance / 96 * 2.54).toFixed(2);
-        const metersDistance = (pixelDistance / 3779.527559055).toFixed(2);
-        const kilometersDistance = (pixelDistance / 3779527.559055).toFixed(4);
-        const milesDistance = (pixelDistance / 63360).toFixed(4);
-        
-        document.getElementById('totalDistance').textContent = pixelDistance;
-        document.getElementById('realWorldDistance').innerHTML = `
-          ${cmDistance} cm<br>
-          ${metersDistance} meters<br>
-          ${kilometersDistance} kilometers<br>
-          ${milesDistance} miles
-        `;
-      }
+    chrome.storage.local.get(['dailyDistances', 'lifetimeDistance', 'fiveDayAverage'], (result) => {
+      const { lifetimeDistance, fiveDayAverage } = result;
+      const totalDistance = lifetimeDistance || 0;
+      const pixelDistance = Math.round(totalDistance);
+      const cmDistance = (pixelDistance / 96 * 2.54).toFixed(2);
+      const metersDistance = (pixelDistance / 3779.527559055).toFixed(2);
+      const kilometersDistance = (pixelDistance / 3779527.559055).toFixed(4);
+      const milesDistance = (pixelDistance / 63360).toFixed(4);
+
+      document.getElementById('totalDistance').textContent = pixelDistance;
+      document.getElementById('realWorldDistance').innerHTML = `
+        ${cmDistance} cm<br>
+        ${metersDistance} meters<br>
+        ${kilometersDistance} kilometers<br>
+        ${milesDistance} miles
+      `;
     });
   }
 
-  // Initial update
   updateStats();
+  setInterval(updateStats, 1000);
 
-  // Set up a listener to receive updates from the background script
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === 'updateStats') {
       updateStats();
     }
   });
-
-  // Periodically update the stats
-  setInterval(updateStats, 1000);
 }

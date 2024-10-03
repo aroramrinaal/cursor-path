@@ -90,9 +90,11 @@ body {
   padding: 15px;
 }
 
-#distanceChart {
+#distanceChart,
+#activityTimelineChart {
   width: 100% !important;
   height: 200px !important;
+  margin-bottom: 20px;
 }
 
 ::-webkit-scrollbar {

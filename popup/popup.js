@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = document.getElementById('distanceChart').getContext('2d');
   let chart;
 
+  const ctxTimeline = document.getElementById('activityTimelineChart').getContext('2d');
+  let timelineChart;
+
   function updateStats() {
     chrome.runtime.sendMessage({ type: 'getDistanceStats' }, (response) => {
       if (chrome.runtime.lastError) {
@@ -14,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const { dailyDistances, lifetimeDistance, fiveDayAverage } = response;
+      const { dailyDistances, lifetimeDistance, fiveDayAverage, activityTimeline } = response;
       const dates = Object.keys(dailyDistances).sort();
       const distances = dates.map(date => dailyDistances[date]);
 
@@ -96,12 +99,90 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
+
+      updateActivityTimeline(activityTimeline);
     });
   }
 
   function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function updateActivityTimeline(activityTimeline) {
+    const today = new Date().toISOString().split('T')[0];
+    const todayActivity = activityTimeline[today] || [];
+
+    const hourlyActivity = new Array(24).fill(0);
+    todayActivity.forEach(entry => {
+      const hour = new Date(entry.timestamp).getHours();
+      hourlyActivity[hour] += entry.distance;
+    });
+
+    const labels = Array.from({ length: 24 }, (_, i) => `${i}:00`);
+
+    if (timelineChart) {
+      timelineChart.destroy();
+    }
+
+    timelineChart = new Chart(ctxTimeline, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Hourly Cursor Activity',
+          data: hourlyActivity,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Distance (px)',
+              color: 'hsl(180, 100%, 90%)'
+            },
+            ticks: {
+              color: 'hsl(180, 100%, 90%)'
+            },
+            grid: {
+              color: 'hsl(180, 100%, 90%)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Hour',
+              color: 'hsl(180, 100%, 90%)'
+            },
+            ticks: {
+              color: 'hsl(180, 100%, 90%)'
+            },
+            grid: {
+              color: 'hsl(180, 100%, 90%)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: 'hsl(180, 100%, 90%)'
+            }
+          },
+          tooltip: {
+            titleColor: 'hsl(180, 100%, 90%)',
+            bodyColor: 'hsl(180, 100%, 90%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            borderColor: 'hsl(180, 100%, 90%)',
+            borderWidth: 1
+          }
+        }
+      }
+    });
   }
 
   updateStats();

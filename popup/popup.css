@@ -113,3 +113,72 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-foreground);
 }
+
+.reset-button {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.reset-button:hover {
+  background-color: hsl(200, 100%, 32%);
+}
+
+.custom-alert {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.alert-content {
+  background-color: var(--card-background);
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid var(--primary);
+  width: 80%;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.alert-logo {
+  width: 32px;  /* doubled from 16px for better visibility */
+  height: 32px; /* doubled from 16px for better visibility */
+  margin-bottom: 15px;
+  image-rendering: pixelated;  /* this helps small icons look crisp when scaled up */
+}
+
+.alert-buttons {
+  margin-top: 20px;
+}
+
+.alert-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.alert-button.confirm {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.alert-button.cancel {
+  background-color: #d32f2f;
+  color: white;
+}

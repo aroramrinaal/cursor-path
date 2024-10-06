@@ -31,6 +31,7 @@
         <p class="stat-value"><span id="realWorldDistance"></span> cm</p>
       </div>
     </div>
+    <button id="resetButton" class="reset-button">Reset Today's Data</button>
     <div class="chart-container">
       <canvas id="distanceChart"></canvas>
     </div>
@@ -39,5 +40,16 @@
     </div>
   </div>
   <script src="popup.js"></script>
+  <!-- Add this just before the closing </body> tag -->
+  <div id="customAlert" class="custom-alert">
+    <div class="alert-content">
+      <img src="/assets/icon16.png" alt="Logo" class="alert-logo">
+      <p>Are you sure you want to reset today's data? This action cannot be undone.</p>
+      <div class="alert-buttons">
+        <button id="confirmReset" class="alert-button confirm">Confirm</button>
+        <button id="cancelReset" class="alert-button cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

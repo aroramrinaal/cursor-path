@@ -12,6 +12,22 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'update') {
+    chrome.storage.local.clear(() => {
+      console.log('Local storage cleared due to extension update');
+      // Initialize with default values
+      chrome.storage.local.set({
+        dailyDistances: {},
+        lastResetDate: new Date().toDateString(),
+        lifetimeDistance: 0,
+        fiveDayAverage: 0,
+        activityTimeline: {}
+      });
+    });
+  }
+});
+
 function getTodayKey() {
   return new Date().toISOString().split('T')[0];
 }
@@ -73,5 +89,67 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       });
     });
     return true;
+  } else if (request.type === 'checkDateChange') {
+    const dateChanged = checkDateChange();
+    sendResponse({ dateChanged: dateChanged });
+    return true;
+  } else if (request.type === 'manualReset') {
+    const today = new Date().toDateString();
+    chrome.storage.local.get(['dailyDistances', 'activityTimeline'], (result) => {
+      const dailyDistances = result.dailyDistances || {};
+      const activityTimeline = result.activityTimeline || {};
+      const todayKey = getTodayKey();
+
+      dailyDistances[todayKey] = 0;
+      activityTimeline[todayKey] = [];
+
+      chrome.storage.local.set({
+        lastResetDate: today,
+        dailyDistances: dailyDistances,
+        activityTimeline: activityTimeline
+      }, () => {
+        sendResponse({ success: true });
+        chrome.runtime.sendMessage({ type: 'updateStats' });
+      });
+    });
+    return true;
   }
 });
+
+function checkDateChange() {
+  const today = new Date().toDateString();
+  chrome.storage.local.get(['lastResetDate', 'dailyDistances', 'activityTimeline'], (result) => {
+    if (result.lastResetDate !== today) {
+      const newDailyDistances = { [getTodayKey()]: 0 };
+      const newActivityTimeline = { [getTodayKey()]: [] };
+      
+      chrome.storage.local.set({
+        lastResetDate: today,
+        dailyDistances: newDailyDistances,
+        activityTimeline: newActivityTimeline
+      }, () => {
+        chrome.runtime.sendMessage({ type: 'updateStats' });
+      });
+      return true; // Date changed
+    }
+    return false; // Date didn't change
+  });
+}
+
+function scheduleNextCheck() {
+  const now = new Date();
+  const nextCheck = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const timeUntilNextCheck = nextCheck - now;
+
+  setTimeout(() => {
+    checkDateChange();
+    scheduleNextCheck();
+  }, timeUntilNextCheck);
+}
+
+// Initial check and scheduling
+checkDateChange();
+scheduleNextCheck();
+
+// Also check every minute to ensure robustness
+setInterval(checkDateChange, 60000);

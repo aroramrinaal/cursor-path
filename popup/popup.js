@@ -10,6 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctxTimeline = document.getElementById('activityTimelineChart').getContext('2d');
   let timelineChart;
 
+  const resetButton = document.getElementById('resetButton');
+  const customAlert = document.getElementById('customAlert');
+  const confirmReset = document.getElementById('confirmReset');
+  const cancelReset = document.getElementById('cancelReset');
+  
+  resetButton.addEventListener('click', () => {
+    customAlert.style.display = 'block';
+  });
+
+  confirmReset.addEventListener('click', () => {
+    chrome.runtime.sendMessage({ type: 'manualReset' }, () => {
+      updateStats();
+    });
+    customAlert.style.display = 'none';
+  });
+
+  cancelReset.addEventListener('click', () => {
+    customAlert.style.display = 'none';
+  });
+
   function updateStats() {
     chrome.runtime.sendMessage({ type: 'getDistanceStats' }, (response) => {
       if (chrome.runtime.lastError) {
@@ -184,6 +204,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  function checkAndUpdateDate() {
+    chrome.runtime.sendMessage({ type: 'checkDateChange' }, (response) => {
+      if (response && response.dateChanged) {
+        updateStats();
+      }
+    });
+  }
+
+  // Check date change when popup opens
+  checkAndUpdateDate();
+
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message.type === 'updateStats') {
+      updateStats();
+    }
+  });
 
   updateStats();
   setInterval(updateStats, 5000);

@@ -41,11 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const dates = Object.keys(dailyDistances).sort();
       const distances = dates.map(date => dailyDistances[date]);
 
-      // Get today's date and distance
       const today = new Date().toISOString().split('T')[0];
       const todayDistance = dailyDistances[today] || 0;
 
-      // Update today's date and distance
       todayDateElement.textContent = formatDate(today);
       todayDistanceElement.textContent = Math.round(todayDistance);
 
@@ -78,42 +76,42 @@ document.addEventListener('DOMContentLoaded', () => {
             y: {
               beginAtZero: true,
               ticks: {
-                color: 'hsl(180, 100%, 90%)', // Set ticks color to match theme
+                color: 'hsl(180, 100%, 90%)',
               },
               grid: {
-                color: 'hsl(180, 100%, 90%)' // Set grid line color to match theme
+                color: 'hsl(180, 100%, 90%)'
               },
               title: {
                 display: true,
                 text: 'Distance (px)',
-                color: 'hsl(180, 100%, 90%)' // Set axis title color to match theme
+                color: 'hsl(180, 100%, 90%)'
               }
             },
             x: {
               ticks: {
-                color: 'hsl(180, 100%, 90%)', // Set ticks color to match theme
+                color: 'hsl(180, 100%, 90%)',
               },
               grid: {
-                color: 'hsl(180, 100%, 90%)' // Set grid line color to match theme
+                color: 'hsl(180, 100%, 90%)'
               },
               title: {
                 display: true,
                 text: 'Date',
-                color: 'hsl(180, 100%, 90%)' // Set axis title color to match theme
+                color: 'hsl(180, 100%, 90%)'
               }
             }
           },
           plugins: {
             legend: {
               labels: {
-                color: 'hsl(180, 100%, 90%)' // Set legend text color to match theme
+                color: 'hsl(180, 100%, 90%)'
               }
             },
             tooltip: {
               titleColor: 'hsl(180, 100%, 90%)',
-              bodyColor: 'hsl(180, 100%, 90%)', // Set tooltip body color
-              backgroundColor: 'rgba(0, 0, 0, 0.7)', // Dark background for contrast
-              borderColor: 'hsl(180, 100%, 90%)', // Tooltip border color
+              bodyColor: 'hsl(180, 100%, 90%)',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              borderColor: 'hsl(180, 100%, 90%)',
               borderWidth: 1
             }
           }
@@ -213,7 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Check date change when popup opens
   checkAndUpdateDate();
 
   chrome.runtime.onMessage.addListener((message) => {

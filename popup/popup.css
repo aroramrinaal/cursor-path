@@ -31,7 +31,7 @@ body {
   font-size: 24px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 5px; /* Reduced margin-bottom */
+  margin-bottom: 5px;
   color: var(--primary-foreground);
 }
 
@@ -40,7 +40,7 @@ body {
   text-align: center;
   color: white;
   margin-top: 0;
-  margin-bottom: 15px; /* Reduced margin-bottom */
+  margin-bottom: 15px;
 }
 
 .stats-grid {
@@ -154,10 +154,10 @@ body {
 }
 
 .alert-logo {
-  width: 32px;  /* doubled from 16px for better visibility */
-  height: 32px; /* doubled from 16px for better visibility */
+  width: 32px;
+  height: 32px;
   margin-bottom: 15px;
-  image-rendering: pixelated;  /* this helps small icons look crisp when scaled up */
+  image-rendering: pixelated;
 }
 
 .alert-buttons {
